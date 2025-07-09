@@ -66,4 +66,21 @@ describe('UsersService', () => {
       // expect(utilsServiceMock.pluck()).toEqual(['Foo'])
     })
   })
+
+  // rxjs testing
+  describe('addUser$', () => {
+    it('should add a user', () => {
+      let user: UserInterface = { id: "3", name: "john" }
+      service.addUser$(user)
+      expect(service.users$.getValue()).toEqual([{ id: "3", name: "john" }])
+    })
+  })
+
+  describe('removeUser$', () => {
+    it('should remove a user', () => {
+      service.users$.next([{ id: "3", name: "john" }])
+      service.removeUser$("3")
+      expect(service.users$.getValue()).toEqual([])
+    })
+  })
 });
